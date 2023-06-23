@@ -1,20 +1,58 @@
 #include <iostream>
 #include <stdlib.h>
+#include <string>
 
 using namespace std;
 
 char board[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}}; // initial values printed to the console
-char turn = 'X';                                                        // X is the one that starts
 
-// count the number of wins.
-int winsX = 0;
-int winsO = 0;
+struct Player
+{
+    string name;
+    char symbol;
+    int score;
+};
+
+int score1 = 0;
+int score2 = 0;
+
+char turn;
+Player player1;
+Player player2;
 
 // declaring the functions
 bool gameOver();
 void displayGame();
 void playGame();
 void playAgain(char x);
+void players();
+
+void players()
+{
+
+    cout << "Hello and Welcome! Please tell me your names" << endl;
+    cout << "Player 1, what is your name?" << endl;
+    cin >> player1.name;
+    cout << "And what is your symbol?" << endl;
+    cin >> player1.symbol;
+
+    cout << "Player 2, what is your name?" << endl;
+    cin >> player2.name;
+    cout << "Since " << player1.name << " chose '" << player1.symbol << "', you have been attributed the symbol '";
+    if (player1.symbol == 'X')
+    {
+        player2.symbol = 'O';
+        turn = player1.symbol;
+    }
+    else
+    {
+        player2.symbol = 'X';
+        turn = player2.symbol;
+    }
+    cout << player2.symbol << "'\n";
+
+    system("pause");
+}
 
 // function to verify if the game has ended or if it needs to continue
 bool gameOver()
@@ -45,20 +83,22 @@ bool gameOver()
     if (over == 1)
     {
         // At the end of the game, the turn changes for one last time, so we verify opposite values to find the winner.
-        if (turn == 'X') // if the turn has changed to X after the game ended, then the winner is O because player 2 was the one that made the last move.
+        if (turn == player1.symbol) // if the turn has changed to X after the game ended, then the winner is O because player 2 was the one that made the last move.
         {
-            cout << "Congrats player2(O) you won!\n";
+            cout << "Congrats " << player2.name << " you won!\n";
             cout << "Do you wish to play again? (y/n) \n";
-            winsO++;
+            score2++;
+            player2.score = score2;
             char x;
             cin >> x;
             playAgain(x); // replay the game
         }
-        else if (turn == 'O')
+        else if (turn == player2.symbol)
         {
-            cout << "Congrats player1(X) you won!" << endl;
+            cout << "Congrats " << player1.name << " you won!\n";
             cout << "Do you wish to play again? (y/n) \n";
-            winsX++;
+            score1++;
+            player1.score = score1;
             char x;
             cin >> x;
             playAgain(x);
@@ -105,12 +145,13 @@ void displayGame()
     cout << "  " << board[2][0] << "  |  " << board[2][1] << "  |  " << board[2][2] << endl;
     cout << "     |     |     " << endl
          << endl;
-    cout << "Player 1(X): " << winsX << endl;
-    cout << "Player 2(O): " << winsO << endl;
+    cout << player1.name << "(" << player1.symbol << "): " << player1.score << endl;
+    cout << player2.name << "(" << player2.symbol << "): " << player2.score << endl;
 }
 
 void playGame()
 {
+
     int choice; // choose the square you want to occupy.
 
     while (gameOver()) // if the game hasn't ended keep playing
@@ -127,13 +168,13 @@ void playGame()
             if (board[0][0] != 'X' && board[0][0] != 'O') // verify if the square is not occupied
             {
                 board[0][0] = turn; // the square take the value of the turn
-                if (turn == 'X')
+                if (turn == player1.symbol)
                 {
-                    turn = 'O'; // change the turn value for the next player
+                    turn = player2.symbol; // change the turn value for the next player
                 }
                 else
                 {
-                    turn = 'X'; // change the turn value for the next player
+                    turn = player1.symbol; // change the turn value for the next player
                 }
             }
 
@@ -147,13 +188,13 @@ void playGame()
             if (board[0][1] != 'X' && board[0][1] != 'O')
             {
                 board[0][1] = turn;
-                if (turn == 'X')
+                if (turn == player1.symbol)
                 {
-                    turn = 'O';
+                    turn = player2.symbol; // change the turn value for the next player
                 }
                 else
                 {
-                    turn = 'X';
+                    turn = player1.symbol; // change the turn value for the next player
                 }
             }
 
@@ -167,13 +208,13 @@ void playGame()
             if (board[0][2] != 'X' && board[0][2] != 'O')
             {
                 board[0][2] = turn;
-                if (turn == 'X')
+                if (turn == player1.symbol)
                 {
-                    turn = 'O';
+                    turn = player2.symbol; // change the turn value for the next player
                 }
                 else
                 {
-                    turn = 'X';
+                    turn = player1.symbol; // change the turn value for the next player
                 }
             }
 
@@ -187,13 +228,13 @@ void playGame()
             if (board[1][0] != 'X' && board[1][0] != 'O')
             {
                 board[1][0] = turn;
-                if (turn == 'X')
+                if (turn == player1.symbol)
                 {
-                    turn = 'O';
+                    turn = player2.symbol; // change the turn value for the next player
                 }
                 else
                 {
-                    turn = 'X';
+                    turn = player1.symbol; // change the turn value for the next player
                 }
             }
 
@@ -207,13 +248,13 @@ void playGame()
             if (board[1][1] != 'X' && board[1][1] != 'O')
             {
                 board[1][1] = turn;
-                if (turn == 'X')
+                if (turn == player1.symbol)
                 {
-                    turn = 'O';
+                    turn = player2.symbol; // change the turn value for the next player
                 }
                 else
                 {
-                    turn = 'X';
+                    turn = player1.symbol; // change the turn value for the next player
                 }
             }
 
@@ -227,13 +268,13 @@ void playGame()
             if (board[1][2] != 'X' && board[1][2] != 'O')
             {
                 board[1][2] = turn;
-                if (turn == 'X')
+                if (turn == player1.symbol)
                 {
-                    turn = 'O';
+                    turn = player2.symbol; // change the turn value for the next player
                 }
                 else
                 {
-                    turn = 'X';
+                    turn = player1.symbol; // change the turn value for the next player
                 }
             }
 
@@ -247,13 +288,13 @@ void playGame()
             if (board[2][0] != 'X' && board[2][0] != 'O')
             {
                 board[2][0] = turn;
-                if (turn == 'X')
+                if (turn == player1.symbol)
                 {
-                    turn = 'O';
+                    turn = player2.symbol; // change the turn value for the next player
                 }
                 else
                 {
-                    turn = 'X';
+                    turn = player1.symbol; // change the turn value for the next player
                 }
             }
 
@@ -267,13 +308,13 @@ void playGame()
             if (board[2][1] != 'X' && board[2][1] != 'O')
             {
                 board[2][1] = turn;
-                if (turn == 'X')
+                if (turn == player1.symbol)
                 {
-                    turn = 'O';
+                    turn = player2.symbol; // change the turn value for the next player
                 }
                 else
                 {
-                    turn = 'X';
+                    turn = player1.symbol; // change the turn value for the next player
                 }
             }
 
@@ -287,13 +328,13 @@ void playGame()
             if (board[2][2] != 'X' && board[2][2] != 'O')
             {
                 board[2][2] = turn;
-                if (turn == 'X')
+                if (turn == player1.symbol)
                 {
-                    turn = 'O';
+                    turn = player2.symbol; // change the turn value for the next player
                 }
                 else
                 {
-                    turn = 'X';
+                    turn = player1.symbol; // change the turn value for the next player
                 }
             }
 
@@ -326,7 +367,20 @@ void playAgain(char x)
         board[2][0] = '7';
         board[2][1] = '8';
         board[2][2] = '9'; // reinitialize the values of the board
-        turn = 'X';
+
+        char aux;
+        aux = player2.symbol;
+        player2.symbol = player1.symbol;
+        player1.symbol = aux;
+
+        if (player1.symbol == 'X')
+        {
+            turn = player1.symbol;
+        }
+        else
+        {
+            turn = player2.symbol;
+        }
 
         playGame(); // restart game
     }
@@ -335,8 +389,8 @@ void playAgain(char x)
         system("cls");
         cout << "Okay then, have a nice day!\n";
         cout << "Final score is : \n"
-             << "Player 1: " << winsX << "\n"
-             << "Player 2: " << winsO << "\n";
+             << player1.name << ": " << player1.score << "\n"
+             << player2.name << ": " << player2.score << "\n";
         system("pause");
         exit(0); // exit the game
     }
@@ -361,6 +415,10 @@ int main()
         \|__|  \|__|\|_______|                 \|__|  \|__|\|__|\|_______|                 \|__|  \|_______|\|_______|)"
          << "\n                                                                                                             -by Dru\n";
     system("pause");
+
+    system("cls");
+
+    players();
 
     playGame();
 
